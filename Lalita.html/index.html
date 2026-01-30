@@ -18,60 +18,24 @@ body{
   padding:20px;
 }
 
-/* ===== FONDO (CORREGIDO PARA MÓVIL) ===== */
+/* ================== FONDO ================== */
 .fondo{
   position:fixed;
   inset:0;
-  background-image:
+  background:
     radial-gradient(circle, rgba(0,0,0,.35), rgba(0,0,0,.85)),
-    url('recuerdo.jpg');
-  background-repeat:no-repeat;
-  background-size:contain;
-  background-position:center center;
-  background-color:#0d0d0d;
+    url('recuerdo.jpg') center center / cover no-repeat;
   opacity:0;
-  transition:opacity 3.5s ease;
+  transform:scale(1.05);
+  transition:opacity 3.5s ease, transform 4.5s ease;
   z-index:-1;
 }
 body.abierto .fondo{
   opacity:0.45;
+  transform:scale(1);
 }
 
-/* TEXTO LUMINOSO */
-#nombre-luz{
-  position:fixed;
-  bottom:22px;
-  right:22px;
-  font-size:1.2em;
-  font-family:'Times New Roman',serif;
-  color:#ffd88a;
-  opacity:0;
-  pointer-events:none;
-  text-shadow:
-    0 0 10px rgba(255,220,150,.6),
-    0 0 22px rgba(255,200,120,.9),
-    0 0 38px rgba(255,170,80,1);
-  transition:opacity 2.5s ease, font-size 2.5s ease;
-  z-index:999;
-}
-
-/* PALPITAR SOLO L Y S */
-.palpitar-letra{
-  display:inline-block;
-  animation:palpitar 4s ease-in-out infinite;
-}
-@keyframes palpitar{
-  0%,100%{ transform:scale(1); }
-  50%{ transform:scale(1.08); }
-}
-
-/* AMPERSAND */
-.amp{
-  font-size:0.75em;
-  opacity:0.85;
-}
-
-/* CONTENEDOR */
+/* ================== CONTENEDOR ================== */
 .wrap{
   width:100%;
   max-width:420px;
@@ -80,7 +44,7 @@ body.abierto .fondo{
   z-index:5;
 }
 
-/* LUZ */
+/* ================== LUZ ================== */
 .luz{
   position:absolute;
   inset:-60%;
@@ -97,7 +61,7 @@ body.abierto .fondo{
   50%{ opacity:.75; }
 }
 
-/* SOBRE */
+/* ================== SOBRE ================== */
 .sobre{
   position:relative;
   width:100%;
@@ -109,7 +73,7 @@ body.abierto .fondo{
   transform-style:preserve-3d;
 }
 
-/* TAPA */
+/* ================== TAPA ================== */
 .tapa{
   position:absolute;
   top:0; left:0;
@@ -121,7 +85,7 @@ body.abierto .fondo{
   z-index:6;
 }
 
-/* SELLO */
+/* ================== SELLO ================== */
 .sello{
   position:absolute;
   top:50%;
@@ -139,14 +103,49 @@ body.abierto .fondo{
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#ffd6c9;
   font-family:'Times New Roman',serif;
   font-size:22px;
   letter-spacing:2px;
   transition:opacity .7s ease, transform .7s ease;
+  animation:latido 4.5s ease-in-out infinite;
 }
 
-/* CARTA */
+/* Animación suave del sello */
+@keyframes latido{
+  0%,100%{ transform:translate(-50%,-50%) scale(1); }
+  50%{ transform:translate(-50%,-50%) scale(1.05); }
+}
+
+/* Letras brillantes */
+.sello .letra{
+  color:#ffd6c9;
+  text-shadow:
+    0 0 6px rgba(255,220,180,.6),
+    0 0 14px rgba(255,180,140,.9);
+  animation:brillar 3.5s ease-in-out infinite;
+}
+
+/* & más pequeño */
+.sello .amp{
+  font-size:0.6em;
+  margin:0 4px;
+  opacity:.75;
+}
+
+@keyframes brillar{
+  0%,100%{
+    text-shadow:
+      0 0 6px rgba(255,220,180,.6),
+      0 0 14px rgba(255,180,140,.9);
+  }
+  50%{
+    text-shadow:
+      0 0 10px rgba(255,240,200,.9),
+      0 0 22px rgba(255,200,160,1);
+  }
+}
+
+/* ================== CARTA ================== */
 .carta{
   position:absolute;
   inset:10px;
@@ -155,7 +154,7 @@ body.abierto .fondo{
     rgba(253,247,236,0.95)
   );
   border-radius:10px;
-  padding:28px 22px 42px;
+  padding:28px 22px;
   transform:translateY(95%);
   opacity:0;
   transition:transform 1.6s ease, opacity 1.4s ease;
@@ -163,23 +162,24 @@ body.abierto .fondo{
   overflow-y:auto;
 }
 
-h1{ margin:0 0 14px; font-size:1.5em; color:#5a2a3c; }
-p{ margin:0; font-size:1.05em; color:#4a2b2b; line-height:1.7; white-space:pre-line; }
+h1{ margin:0 0 14px; font-size:1.6em; color:#5a2a3c; }
+p{ margin:0; font-size:1.1em; color:#4a2b2b; line-height:1.75; white-space:pre-line; }
 
 #firma{
-  margin-top:22px;
+  margin-top:26px;
   font-style:italic;
   font-weight:bold;
   opacity:0;
-  transition:opacity 1.6s ease;
+  transform:translateY(10px);
+  transition:opacity 1.6s ease, transform 1.6s ease;
 }
 
-/* ABIERTO */
+/* ================== ABIERTO ================== */
 .abierto .tapa{ transform:rotateX(-170deg); }
 .abierto .carta{ transform:translateY(0); opacity:1; }
 .abierto .sello{ opacity:0; transform:translate(-50%,-50%) scale(.6); }
 
-/* BOTÓN */
+/* ================== BOTÓN ================== */
 button{
   margin:26px auto 0;
   display:block;
@@ -194,7 +194,7 @@ button{
 }
 button.hide{ opacity:0; pointer-events:none; }
 
-/* ESTRELLAS */
+/* ================== ESTRELLAS ================== */
 .estrella{
   position:fixed;
   top:-40px;
@@ -212,23 +212,29 @@ button.hide{ opacity:0; pointer-events:none; }
 @keyframes caer{
   to{ transform:translateY(110vh); }
 }
+
+/* ================== MOBILE ================== */
+@media (max-width:480px){
+  #firma{
+    font-size:.95em;
+    margin-bottom:18px;
+  }
+}
 </style>
 </head>
 
 <body>
 
 <div class="fondo"></div>
-<div id="nombre-luz"></div>
 
 <div class="wrap">
   <div class="sobre" id="sobre">
     <div class="tapa"></div>
 
-    <!-- SELLO -->
     <div class="sello">
-      <span class="palpitar-letra">L</span>
-      <span class="amp">&nbsp;&amp;&nbsp;</span>
-      <span class="palpitar-letra">S</span>
+      <span class="letra">L</span>
+      <span class="amp">&amp;</span>
+      <span class="letra">S</span>
     </div>
 
     <div class="carta">
@@ -268,10 +274,6 @@ regalo que me ha dado el universo.
 Feliz cumpleaños,
 Mi Lalita... ❤️`;
 
-const frase = "Te amo Laura Guzman";
-const fecha = "12/12/2024 - ♾️";
-const nombreLuz = document.getElementById("nombre-luz");
-
 const sobre=document.getElementById("sobre");
 const mensaje=document.getElementById("mensaje");
 const btn=document.getElementById("btn");
@@ -280,7 +282,7 @@ const papel=document.getElementById("papel");
 const pluma=document.getElementById("pluma");
 const firma=document.getElementById("firma");
 
-let i=0, iniciado=false;
+let i=0,iniciado=false;
 
 function escribir(){
   if(i<texto.length){
@@ -289,7 +291,10 @@ function escribir(){
     pluma.play().catch(()=>{});
     setTimeout(escribir,45);
   }else{
-    setTimeout(()=>firma.style.opacity=1,600);
+    setTimeout(()=>{
+      firma.style.opacity=1;
+      firma.style.transform="translateY(0)";
+    },600);
   }
 }
 
@@ -300,26 +305,9 @@ function musicaSuave(){
   const subir=setInterval(()=>{
     if(v<1){
       v+=0.02;
-      music.volume=v;
+      music.volume=Math.min(v,1);
     }else clearInterval(subir);
   },120);
-}
-
-function escribirFrase(){
-  nombreLuz.textContent="";
-  nombreLuz.style.opacity=1;
-  let j=0;
-  const escribir=setInterval(()=>{
-    if(j<frase.length){
-      nombreLuz.textContent+=frase.charAt(j++);
-    }else{
-      clearInterval(escribir);
-      setTimeout(()=>{
-        nombreLuz.textContent=fecha;
-        nombreLuz.style.fontSize="1.45em";
-      },1600);
-    }
-  },220);
 }
 
 function abrir(){
@@ -331,7 +319,6 @@ function abrir(){
   setTimeout(()=>papel.play().catch(()=>{}),500);
   setTimeout(escribir,1300);
   setTimeout(musicaSuave,1600);
-  setTimeout(escribirFrase,1800);
 }
 
 for(let i=0;i<16;i++){
