@@ -6,7 +6,6 @@
 <title>Mi Alonsita ❤️</title>
 
 <style>
-/* ================== BODY ================== */
 body{
   margin:0;
   min-height:100vh;
@@ -19,7 +18,7 @@ body{
   padding:20px;
 }
 
-/* ================== FONDO ================== */
+/* FONDO */
 .fondo{
   position:fixed;
   inset:0;
@@ -36,31 +35,66 @@ body.abierto .fondo{
   transform:scale(1);
 }
 
-/* ================== CONTENEDOR ================== */
+/* TEXTO LUMINOSO */
+#nombre-luz{
+  position:fixed;
+  bottom:26px;
+  right:28px;
+  font-size:1.2em;
+  font-family:'Times New Roman',serif;
+  color:#ffd88a;
+  opacity:0;
+  pointer-events:none;
+  text-shadow:
+    0 0 10px rgba(255,220,150,.6),
+    0 0 22px rgba(255,200,120,.9),
+    0 0 38px rgba(255,170,80,1);
+  transition:
+    opacity 2.5s ease,
+    font-size 2.5s ease;
+  z-index:999;
+}
+
+/* PALPITAR */
+.palpitar{
+  animation:palpitar 4.5s ease-in-out infinite;
+}
+@keyframes palpitar{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.04); }
+}
+
+/* CONTENEDOR */
 .wrap{
   width:100%;
   max-width:420px;
   perspective:1600px;
   position:relative;
+  z-index:5;
 }
 
-/* ================== LUZ ================== */
+/* LUZ */
 .luz{
   position:absolute;
   inset:-60%;
   background:radial-gradient(circle,rgba(255,220,160,.55),transparent 70%);
   opacity:0;
-  transition:opacity 2s ease;
   pointer-events:none;
-  z-index:1;
 }
-.abierto ~ .luz{ opacity:1; }
+.abierto ~ .luz{
+  opacity:1;
+  animation:respirar 6s ease-in-out infinite;
+}
+@keyframes respirar{
+  0%,100%{ opacity:.4; }
+  50%{ opacity:.75; }
+}
 
-/* ================== SOBRE ================== */
+/* SOBRE */
 .sobre{
   position:relative;
   width:100%;
-  aspect-ratio:16/10;          /* 🔑 FIX RESPONSIVE */
+  aspect-ratio:16/10;
   background:url('sobre.jpg') center/cover no-repeat;
   border-radius:14px;
   box-shadow:0 30px 65px rgba(0,0,0,.65);
@@ -68,7 +102,7 @@ body.abierto .fondo{
   transform-style:preserve-3d;
 }
 
-/* ================== TAPA ================== */
+/* TAPA */
 .tapa{
   position:absolute;
   top:0; left:0;
@@ -80,7 +114,7 @@ body.abierto .fondo{
   z-index:6;
 }
 
-/* ================== SELLO ================== */
+/* SELLO */
 .sello{
   position:absolute;
   top:50%;
@@ -105,7 +139,14 @@ body.abierto .fondo{
   transition:opacity .7s ease, transform .7s ease;
 }
 
-/* ================== CARTA ================== */
+/* AMPERSAND PEQUEÑO */
+.amp{
+  font-size:0.75em;
+  opacity:0.85;
+  vertical-align:middle;
+}
+
+/* CARTA */
 .carta{
   position:absolute;
   inset:10px;
@@ -122,21 +163,9 @@ body.abierto .fondo{
   overflow-y:auto;
 }
 
-h1{
-  margin:0 0 14px;
-  font-size:1.6em;
-  color:#5a2a3c;
-}
+h1{ margin:0 0 14px; font-size:1.6em; color:#5a2a3c; }
+p{ margin:0; font-size:1.1em; color:#4a2b2b; line-height:1.75; white-space:pre-line; }
 
-p{
-  margin:0;
-  font-size:1.1em;
-  color:#4a2b2b;
-  line-height:1.75;
-  white-space:pre-line;
-}
-
-/* ================== FIRMA ================== */
 #firma{
   margin-top:26px;
   font-style:italic;
@@ -146,12 +175,12 @@ p{
   transition:opacity 1.6s ease, transform 1.6s ease;
 }
 
-/* ================== ABIERTO ================== */
+/* ABIERTO */
 .abierto .tapa{ transform:rotateX(-170deg); }
 .abierto .carta{ transform:translateY(0); opacity:1; }
 .abierto .sello{ opacity:0; transform:translate(-50%,-50%) scale(.6); }
 
-/* ================== BOTÓN ================== */
+/* BOTÓN */
 button{
   margin:26px auto 0;
   display:block;
@@ -166,22 +195,23 @@ button{
 }
 button.hide{ opacity:0; pointer-events:none; }
 
-/* ================== PÉTALOS ================== */
-.petalo{
+/* ESTRELLAS */
+.estrella{
   position:fixed;
   top:-40px;
-  font-size:18px;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:gold;
+  box-shadow:
+    0 0 10px gold,
+    0 0 20px rgba(255,200,120,.9),
+    0 0 30px rgba(255,170,80,.8);
   animation:caer linear infinite;
+  z-index:2;
 }
 @keyframes caer{
-  to{ transform:translateY(110vh) rotate(360deg); }
-}
-
-/* ================== MOBILE TUNING ================== */
-@media (max-width:480px){
-  .wrap{ max-width:360px; }
-  h1{ font-size:1.4em; }
-  p{ font-size:1em; }
+  to{ transform:translateY(110vh); }
 }
 </style>
 </head>
@@ -189,11 +219,14 @@ button.hide{ opacity:0; pointer-events:none; }
 <body>
 
 <div class="fondo"></div>
+<div id="nombre-luz"></div>
 
 <div class="wrap">
   <div class="sobre" id="sobre">
     <div class="tapa"></div>
-    <div class="sello">L&nbsp;S</div>
+
+    <!-- SELLO CON AMPERSAND DELICADO -->
+    <div class="sello">L <span class="amp">&amp;</span> S</div>
 
     <div class="carta">
       <h1>Mi Alonsita ❤️</h1>
@@ -232,6 +265,10 @@ regalo que me ha dado el universo.
 Feliz cumpleaños,
 Mi Lalita... ❤️`;
 
+const frase = "Te amo Laura Guzman";
+const fecha = "12/12/2024 - ♾️";
+const nombreLuz = document.getElementById("nombre-luz");
+
 const sobre=document.getElementById("sobre");
 const mensaje=document.getElementById("mensaje");
 const btn=document.getElementById("btn");
@@ -264,10 +301,29 @@ function musicaSuave(){
     if(v<1){
       v+=0.02;
       music.volume=Math.min(v,1);
-    }else{
-      clearInterval(subir);
-    }
+    }else clearInterval(subir);
   },120);
+}
+
+function escribirFrase(){
+  nombreLuz.textContent="";
+  nombreLuz.style.opacity=1;
+  nombreLuz.style.fontSize="1.2em";
+  nombreLuz.classList.remove("palpitar");
+
+  let j=0;
+  const escribir = setInterval(()=>{
+    if(j < frase.length){
+      nombreLuz.textContent += frase.charAt(j++);
+    }else{
+      clearInterval(escribir);
+      setTimeout(()=>{
+        nombreLuz.textContent = fecha;
+        nombreLuz.style.fontSize="1.5em";
+        nombreLuz.classList.add("palpitar");
+      },1600);
+    }
+  },220);
 }
 
 function abrir(){
@@ -281,17 +337,18 @@ function abrir(){
   setTimeout(()=>papel.play().catch(()=>{}),500);
   setTimeout(escribir,1300);
   setTimeout(musicaSuave,1600);
+  setTimeout(escribirFrase,1800);
 }
 
 for(let i=0;i<16;i++){
-  const p=document.createElement("div");
-  p.className="petalo";
-  p.textContent="🌸";
-  p.style.left=Math.random()*100+"vw";
-  p.style.animationDuration=(6+Math.random()*5)+"s";
-  document.body.appendChild(p);
+  const e=document.createElement("div");
+  e.className="estrella";
+  e.style.left=Math.random()*100+"vw";
+  e.style.animationDuration=(6+Math.random()*5)+"s";
+  document.documentElement.appendChild(e);
 }
 </script>
 
 </body>
 </html>
+
