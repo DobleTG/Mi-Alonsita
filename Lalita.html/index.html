@@ -24,22 +24,20 @@ body{
   inset:0;
   background:
     radial-gradient(circle, rgba(0,0,0,.35), rgba(0,0,0,.85)),
-    url('recuerdo.jpg') center/110% no-repeat;
+    url('recuerdo.jpg') center/cover no-repeat;
   opacity:0;
-  transform:scale(1.05);
-  transition:opacity 3.5s ease, transform 4.5s ease;
+  transition:opacity 3.5s ease;
   z-index:-1;
 }
 body.abierto .fondo{
   opacity:0.45;
-  transform:scale(1);
 }
 
 /* TEXTO LUMINOSO */
 #nombre-luz{
   position:fixed;
-  bottom:26px;
-  right:28px;
+  bottom:22px;
+  right:22px;
   font-size:1.2em;
   font-family:'Times New Roman',serif;
   color:#ffd88a;
@@ -49,19 +47,24 @@ body.abierto .fondo{
     0 0 10px rgba(255,220,150,.6),
     0 0 22px rgba(255,200,120,.9),
     0 0 38px rgba(255,170,80,1);
-  transition:
-    opacity 2.5s ease,
-    font-size 2.5s ease;
+  transition:opacity 2.5s ease, font-size 2.5s ease;
   z-index:999;
 }
 
-/* PALPITAR */
-.palpitar{
-  animation:palpitar 4.5s ease-in-out infinite;
+/* PALPITAR SOLO L Y S */
+.palpitar-letra{
+  display:inline-block;
+  animation:palpitar 4s ease-in-out infinite;
 }
 @keyframes palpitar{
   0%,100%{ transform:scale(1); }
-  50%{ transform:scale(1.04); }
+  50%{ transform:scale(1.08); }
+}
+
+/* AMPERSAND */
+.amp{
+  font-size:0.75em;
+  opacity:0.85;
 }
 
 /* CONTENEDOR */
@@ -139,13 +142,6 @@ body.abierto .fondo{
   transition:opacity .7s ease, transform .7s ease;
 }
 
-/* AMPERSAND PEQUEÑO */
-.amp{
-  font-size:0.75em;
-  opacity:0.85;
-  vertical-align:middle;
-}
-
 /* CARTA */
 .carta{
   position:absolute;
@@ -155,7 +151,7 @@ body.abierto .fondo{
     rgba(253,247,236,0.95)
   );
   border-radius:10px;
-  padding:28px 22px;
+  padding:28px 22px 42px; /* más espacio abajo */
   transform:translateY(95%);
   opacity:0;
   transition:transform 1.6s ease, opacity 1.4s ease;
@@ -163,16 +159,15 @@ body.abierto .fondo{
   overflow-y:auto;
 }
 
-h1{ margin:0 0 14px; font-size:1.6em; color:#5a2a3c; }
-p{ margin:0; font-size:1.1em; color:#4a2b2b; line-height:1.75; white-space:pre-line; }
+h1{ margin:0 0 14px; font-size:1.5em; color:#5a2a3c; }
+p{ margin:0; font-size:1.05em; color:#4a2b2b; line-height:1.7; white-space:pre-line; }
 
 #firma{
-  margin-top:26px;
+  margin-top:22px;
   font-style:italic;
   font-weight:bold;
   opacity:0;
-  transform:translateY(10px);
-  transition:opacity 1.6s ease, transform 1.6s ease;
+  transition:opacity 1.6s ease;
 }
 
 /* ABIERTO */
@@ -225,8 +220,12 @@ button.hide{ opacity:0; pointer-events:none; }
   <div class="sobre" id="sobre">
     <div class="tapa"></div>
 
-    <!-- SELLO CON AMPERSAND DELICADO -->
-    <div class="sello">L <span class="amp">&amp;</span> S</div>
+    <!-- SELLO -->
+    <div class="sello">
+      <span class="palpitar-letra">L</span>
+      <span class="amp">&nbsp;&amp;&nbsp;</span>
+      <span class="palpitar-letra">S</span>
+    </div>
 
     <div class="carta">
       <h1>Mi Alonsita ❤️</h1>
@@ -286,10 +285,7 @@ function escribir(){
     pluma.play().catch(()=>{});
     setTimeout(escribir,45);
   }else{
-    setTimeout(()=>{
-      firma.style.opacity=1;
-      firma.style.transform="translateY(0)";
-    },600);
+    setTimeout(()=>firma.style.opacity=1,600);
   }
 }
 
@@ -300,7 +296,7 @@ function musicaSuave(){
   const subir=setInterval(()=>{
     if(v<1){
       v+=0.02;
-      music.volume=Math.min(v,1);
+      music.volume=v;
     }else clearInterval(subir);
   },120);
 }
@@ -308,19 +304,15 @@ function musicaSuave(){
 function escribirFrase(){
   nombreLuz.textContent="";
   nombreLuz.style.opacity=1;
-  nombreLuz.style.fontSize="1.2em";
-  nombreLuz.classList.remove("palpitar");
-
   let j=0;
-  const escribir = setInterval(()=>{
-    if(j < frase.length){
-      nombreLuz.textContent += frase.charAt(j++);
+  const escribir=setInterval(()=>{
+    if(j<frase.length){
+      nombreLuz.textContent+=frase.charAt(j++);
     }else{
       clearInterval(escribir);
       setTimeout(()=>{
-        nombreLuz.textContent = fecha;
-        nombreLuz.style.fontSize="1.5em";
-        nombreLuz.classList.add("palpitar");
+        nombreLuz.textContent=fecha;
+        nombreLuz.style.fontSize="1.45em";
       },1600);
     }
   },220);
@@ -329,11 +321,9 @@ function escribirFrase(){
 function abrir(){
   if(iniciado) return;
   iniciado=true;
-
   btn.classList.add("hide");
   document.body.classList.add("abierto");
   sobre.classList.add("abierto");
-
   setTimeout(()=>papel.play().catch(()=>{}),500);
   setTimeout(escribir,1300);
   setTimeout(musicaSuave,1600);
@@ -351,4 +341,3 @@ for(let i=0;i<16;i++){
 
 </body>
 </html>
-
