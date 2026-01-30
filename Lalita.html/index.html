@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mi Alonsita ❤️</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+
 <style>
 body{
   margin:0;
@@ -18,24 +20,65 @@ body{
   padding:20px;
 }
 
-/* ================== FONDO ================== */
+/* FONDO */
 .fondo{
   position:fixed;
   inset:0;
   background:
     radial-gradient(circle, rgba(0,0,0,.35), rgba(0,0,0,.85)),
-    url('recuerdo.jpg') center center / cover no-repeat;
+    url('recuerdo.jpg') center/110% no-repeat;
   opacity:0;
   transform:scale(1.05);
   transition:opacity 3.5s ease, transform 4.5s ease;
-  z-index:-1;
+  z-index:-2;
 }
 body.abierto .fondo{
   opacity:0.45;
   transform:scale(1);
 }
 
-/* ================== CONTENEDOR ================== */
+/* VIDEO FONDO */
+.video-fondo{
+  position:fixed;
+  inset:0;
+  object-fit:cover;
+  opacity:0;
+  transition:opacity 3s ease;
+  z-index:-3;
+  pointer-events:none;
+}
+.video-activo{
+  opacity:0.5;
+}
+
+/* TEXTO LUMINOSO */
+#nombre-luz{
+  position:fixed;
+  bottom:26px;
+  right:28px;
+  font-size:1.2em;
+  font-family:'Times New Roman',serif;
+  color:#ffd88a;
+  opacity:0;
+  pointer-events:none;
+  text-shadow:
+    0 0 10px rgba(255,220,150,.6),
+    0 0 22px rgba(255,200,120,.9),
+    0 0 38px rgba(255,170,80,1);
+  transition:opacity 2.5s ease, font-size 2.5s ease;
+  z-index:999;
+}
+
+/* PALPITAR */
+.palpitar{
+  animation:palpitar 4.5s ease-in-out infinite;
+}
+@keyframes palpitar{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.04); }
+}
+
+/* CONTENEDOR */
 .wrap{
   width:100%;
   max-width:420px;
@@ -44,7 +87,7 @@ body.abierto .fondo{
   z-index:5;
 }
 
-/* ================== LUZ ================== */
+/* LUZ */
 .luz{
   position:absolute;
   inset:-60%;
@@ -61,7 +104,7 @@ body.abierto .fondo{
   50%{ opacity:.75; }
 }
 
-/* ================== SOBRE ================== */
+/* SOBRE */
 .sobre{
   position:relative;
   width:100%;
@@ -73,7 +116,7 @@ body.abierto .fondo{
   transform-style:preserve-3d;
 }
 
-/* ================== TAPA ================== */
+/* TAPA */
 .tapa{
   position:absolute;
   top:0; left:0;
@@ -85,7 +128,7 @@ body.abierto .fondo{
   z-index:6;
 }
 
-/* ================== SELLO ================== */
+/* SELLO */
 .sello{
   position:absolute;
   top:50%;
@@ -103,49 +146,19 @@ body.abierto .fondo{
   display:flex;
   align-items:center;
   justify-content:center;
+  color:#ffd6c9;
   font-family:'Times New Roman',serif;
   font-size:22px;
   letter-spacing:2px;
   transition:opacity .7s ease, transform .7s ease;
-  animation:latido 4.5s ease-in-out infinite;
 }
-
-/* Animación suave del sello */
-@keyframes latido{
-  0%,100%{ transform:translate(-50%,-50%) scale(1); }
-  50%{ transform:translate(-50%,-50%) scale(1.05); }
-}
-
-/* Letras brillantes */
-.sello .letra{
-  color:#ffd6c9;
-  text-shadow:
-    0 0 6px rgba(255,220,180,.6),
-    0 0 14px rgba(255,180,140,.9);
-  animation:brillar 3.5s ease-in-out infinite;
-}
-
-/* & más pequeño */
 .sello .amp{
-  font-size:0.6em;
+  font-size:0.65em;
   margin:0 4px;
-  opacity:.75;
+  opacity:0.85;
 }
 
-@keyframes brillar{
-  0%,100%{
-    text-shadow:
-      0 0 6px rgba(255,220,180,.6),
-      0 0 14px rgba(255,180,140,.9);
-  }
-  50%{
-    text-shadow:
-      0 0 10px rgba(255,240,200,.9),
-      0 0 22px rgba(255,200,160,1);
-  }
-}
-
-/* ================== CARTA ================== */
+/* CARTA */
 .carta{
   position:absolute;
   inset:10px;
@@ -174,12 +187,30 @@ p{ margin:0; font-size:1.1em; color:#4a2b2b; line-height:1.75; white-space:pre-l
   transition:opacity 1.6s ease, transform 1.6s ease;
 }
 
-/* ================== ABIERTO ================== */
+/* SEGUNDA CARTA */
+.carta2{
+  position:absolute;
+  inset:10px;
+  background:linear-gradient(
+    rgba(253,247,236,0.85),
+    rgba(253,247,236,0.95)
+  );
+  border-radius:10px;
+  padding:28px 22px;
+  transform:translateY(95%);
+  opacity:0;
+  transition:transform 1.6s ease, opacity 1.4s ease;
+  box-shadow:0 12px 30px rgba(0,0,0,.4);
+  overflow-y:auto;
+  pointer-events:none;
+}
+
+/* ABIERTO */
 .abierto .tapa{ transform:rotateX(-170deg); }
 .abierto .carta{ transform:translateY(0); opacity:1; }
 .abierto .sello{ opacity:0; transform:translate(-50%,-50%) scale(.6); }
 
-/* ================== BOTÓN ================== */
+/* BOTÓN */
 button{
   margin:26px auto 0;
   display:block;
@@ -191,10 +222,18 @@ button{
   font-size:1.05em;
   cursor:pointer;
   box-shadow:0 12px 28px rgba(255,120,160,.65);
+  transition:opacity .6s ease;
+  font-family:'Playfair Display', serif;
+  letter-spacing:.04em;
 }
 button.hide{ opacity:0; pointer-events:none; }
 
-/* ================== ESTRELLAS ================== */
+/* BOTONES SECUNDARIOS */
+#btn2,#btn3{
+  display:none;
+}
+
+/* ESTRELLAS */
 .estrella{
   position:fixed;
   top:-40px;
@@ -213,48 +252,107 @@ button.hide{ opacity:0; pointer-events:none; }
   to{ transform:translateY(110vh); }
 }
 
-/* ================== MOBILE ================== */
-@media (max-width:480px){
-  #firma{
-    font-size:.95em;
-    margin-bottom:18px;
-  }
+/* GLOBOS DE CANTOYA */
+.globo{
+  position:fixed;
+  bottom:-120px;
+  width:90px;
+  pointer-events:none;
+  animation:flotar linear infinite;
+  z-index:3;
+  filter:drop-shadow(0 0 14px rgba(255,180,80,.8));
+}
+@keyframes flotar{
+  from{ transform:translateY(0) translateX(0); }
+  to{ transform:translateY(-120vh) translateX(var(--deriva)); }
+}
+
+/* INFINITO LUMINOSO */
+.infinito{
+  margin-left:6px;
+  color:#ffd88a;
+  text-shadow:
+    0 0 6px rgba(255,220,150,.7),
+    0 0 14px rgba(255,200,120,.9),
+    0 0 24px rgba(255,170,80,1);
+  animation:latidoInfinito 3.8s ease-in-out infinite;
+}
+@keyframes latidoInfinito{
+  0%,100%{ opacity:.7; transform:scale(1); }
+  50%{ opacity:1; transform:scale(1.15); }
 }
 </style>
 </head>
 
 <body>
 
-<div class="fondo"></div>
+<div class="fondo" id="fondo"></div>
+<video id="videoFondo" class="video-fondo" src="recuerdo2.mp4" autoplay loop muted playsinline></video>
+<div id="nombre-luz"></div>
 
 <div class="wrap">
   <div class="sobre" id="sobre">
     <div class="tapa"></div>
 
     <div class="sello">
-      <span class="letra">L</span>
-      <span class="amp">&amp;</span>
-      <span class="letra">S</span>
+      L <span class="amp">&amp;</span> S
     </div>
 
-    <div class="carta">
+    <!-- CARTA 1 -->
+    <div class="carta" id="carta1">
       <h1>Mi Alonsita ❤️</h1>
       <p id="mensaje"></p>
       <p id="firma">Por siempre... tu alonsito</p>
+    </div>
+
+    <!-- CARTA 2 -->
+    <div class="carta2" id="carta2">
+      <h1>Para ti, mi amor ❤️</h1>
+      <p id="mensaje2"></p>
+      <p id="firma2" style="margin-top:26px;font-style:italic;font-weight:bold; opacity:0; transform:translateY(10px); transition:opacity 1.6s ease, transform 1.6s ease;">
+  Con todo mi corazón... tu alonsito
+    </p>
+
     </div>
   </div>
 
   <div class="luz"></div>
 
   <button id="btn" onclick="abrir()">Tócame para abrir 💌</button>
+  <button id="btn2" onclick="abrirSegunda()">Aún no se acaba 💖</button>
+  <button id="btn3" onclick="volverPrimera()">Volver</button>
 
   <audio id="music" src="musica.mp3"></audio>
+  <audio id="music2" src="musica2.mp3"></audio>
   <audio id="papel" src="papel.mp3"></audio>
   <audio id="pluma" src="pluma.mp3"></audio>
 </div>
 
 <script>
-const texto=`Nos conocimos jugando,
+const texto=`Sé que es un "regalo" un poco extraño
+pero sabes se me ocurren cosas locas...
+
+Porque contigo aprendí
+que amar también es calma,
+hogar, risa, refugio,
+y promesa.
+
+Promesa de cuidarte,
+de escucharte,
+de caminar contigo
+en lo bueno y en lo difícil.
+
+Gracias por existir,
+por elegirme,
+por ser tú.
+
+Te amo más de lo que
+las palabras alcanzan.
+
+Feliz cumpleaños,
+Mi Lalita... ❤️`;
+
+const texto2=`Nos conocimos jugando,
 sin imaginar que ese era el
 comienzo de nuestra historia.
 
@@ -269,21 +367,46 @@ estar a tu lado a lo largo de
 este año y espero que sean muchos más,
 a pesar de todo lo que
 hemos pasado... has sido el mejor 
-regalo que me ha dado el universo.
+regalo que me ha dado el universo.`;
 
-Feliz cumpleaños,
-Mi Lalita... ❤️`;
+const frase="Te amo Laura Guzman";
+const fecha="12/12/2024 -";
+const nombreLuz=document.getElementById("nombre-luz");
 
+const fondo=document.getElementById("fondo");
+const videoFondo=document.getElementById("videoFondo");
 const sobre=document.getElementById("sobre");
 const mensaje=document.getElementById("mensaje");
+const mensaje2=document.getElementById("mensaje2");
 const btn=document.getElementById("btn");
+const btn2=document.getElementById("btn2");
+const btn3=document.getElementById("btn3");
 const music=document.getElementById("music");
+const music2=document.getElementById("music2");
 const papel=document.getElementById("papel");
 const pluma=document.getElementById("pluma");
 const firma=document.getElementById("firma");
+const carta1=document.getElementById("carta1");
+const carta2=document.getElementById("carta2");
 
-let i=0,iniciado=false;
+let i=0,j=0,iniciado=false,segundaAbierta=false;
 
+/* ---------- GLOBOS ---------- */
+function crearGlobo(){
+  const g=document.createElement("img");
+  g.src="globo.png";
+  g.className="globo";
+  g.style.left=Math.random()*100+"vw";
+  g.style.width=(60+Math.random()*50)+"px";
+  g.style.setProperty("--deriva",(Math.random()*80-40)+"px");
+  g.style.animationDuration=(14+Math.random()*10)+"s";
+  document.body.appendChild(g);
+  setTimeout(()=>g.remove(),24000);
+}
+
+let globosInterval=null;
+
+/* ---------- TEXTO CARTA 1 ---------- */
 function escribir(){
   if(i<texto.length){
     mensaje.textContent+=texto.charAt(i++);
@@ -294,22 +417,82 @@ function escribir(){
     setTimeout(()=>{
       firma.style.opacity=1;
       firma.style.transform="translateY(0)";
+      btn2.style.display="block";
     },600);
   }
 }
 
-function musicaSuave(){
-  music.volume=0;
-  music.play().catch(()=>{});
+/* ---------- TEXTO CARTA 2 ---------- */
+function escribir2(){
+  if(j < texto2.length){
+    mensaje2.textContent += texto2.charAt(j++);
+    pluma.currentTime = 0;
+    pluma.play().catch(()=>{});
+    setTimeout(escribir2, 45);
+  } else {
+    setTimeout(()=>{
+      const firma2 = document.getElementById("firma2");
+      firma2.style.opacity = 1;
+      firma2.style.transform = "translateY(0)";
+    }, 600);
+  }
+}
+
+
+/* ---------- AUDIO ---------- */
+function fadeOut(audio,callback){
+  let v=audio.volume;
+  const bajar=setInterval(()=>{
+    if(v>0){
+      v-=0.02;
+      audio.volume=Math.max(v,0);
+    }else{
+      clearInterval(bajar);
+      audio.pause();
+      if(callback) callback();
+    }
+  },120);
+}
+
+function fadeIn(audio){
+  audio.volume=0;
+  audio.play().catch(()=>{});
   let v=0;
   const subir=setInterval(()=>{
     if(v<1){
       v+=0.02;
-      music.volume=Math.min(v,1);
+      audio.volume=Math.min(v,1);
     }else clearInterval(subir);
   },120);
 }
 
+function musicaSuave(){
+  fadeIn(music);
+}
+
+/* ---------- TEXTO LUMINOSO ---------- */
+function escribirFrase(){
+  nombreLuz.textContent="";
+  nombreLuz.style.opacity=1;
+  nombreLuz.style.fontSize="1.2em";
+  nombreLuz.classList.remove("palpitar");
+
+  let k=0;
+  const escribir=setInterval(()=>{
+    if(k<frase.length){
+      nombreLuz.textContent+=frase.charAt(k++);
+    }else{
+      clearInterval(escribir);
+      setTimeout(()=>{
+        nombreLuz.innerHTML=`${fecha}<span class="infinito">∞</span>`;
+        nombreLuz.style.fontSize="1.5em";
+        nombreLuz.classList.add("palpitar");
+      },1600);
+    }
+  },220);
+}
+
+/* ---------- ABRIR PRIMERA ---------- */
 function abrir(){
   if(iniciado) return;
   iniciado=true;
@@ -319,8 +502,69 @@ function abrir(){
   setTimeout(()=>papel.play().catch(()=>{}),500);
   setTimeout(escribir,1300);
   setTimeout(musicaSuave,1600);
+  setTimeout(escribirFrase,1800);
+    // VIDEO EN LA PRIMERA CARTA
+  fondo.style.opacity = 0;
+  videoFondo.classList.add("video-activo");
+  videoFondo.currentTime = 0;
+  videoFondo.play().catch(()=>{});
+
 }
 
+/* ---------- ABRIR SEGUNDA ---------- */
+function abrirSegunda(){
+  if(segundaAbierta) return;
+  segundaAbierta=true;
+  btn2.classList.add("hide");
+  btn3.style.display="block";
+
+  fadeOut(music,()=>{
+    fadeIn(music2);
+  });
+
+    // IMAGEN EN LA SEGUNDA CARTA
+  videoFondo.classList.remove("video-activo");
+  fondo.style.opacity = 0.45;
+
+
+  globosInterval=setInterval(crearGlobo,1400);
+
+  carta1.style.opacity=0;
+  carta1.style.transform="translateY(-20px)";
+  setTimeout(()=>{
+    carta1.style.pointerEvents="none";
+    carta2.style.pointerEvents="auto";
+    carta2.style.opacity=1;
+    carta2.style.transform="translateY(0)";
+    escribir2();
+  },600);
+}
+
+/* ---------- VOLVER A PRIMERA ---------- */
+function volverPrimera(){
+  btn3.classList.add("hide");
+  btn2.style.display="block";
+
+  fadeOut(music2,()=>{
+    fadeIn(music);
+  });
+
+  videoFondo.classList.remove("video-activo");
+  fondo.style.opacity=0.45;
+
+  clearInterval(globosInterval);
+
+  carta2.style.opacity=0;
+  carta2.style.transform="translateY(20px)";
+  setTimeout(()=>{
+    carta2.style.pointerEvents="none";
+    carta1.style.pointerEvents="auto";
+    carta1.style.opacity=1;
+    carta1.style.transform="translateY(0)";
+  },600);
+}
+
+/* ---------- ESTRELLAS ---------- */
 for(let i=0;i<16;i++){
   const e=document.createElement("div");
   e.className="estrella";
