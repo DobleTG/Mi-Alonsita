@@ -69,6 +69,21 @@ body.abierto .fondo{
   z-index:999;
 }
 
+.letra-suave{
+  opacity:0;
+  filter:blur(4px);
+  display:inline-block;
+  transition:
+    opacity .45s ease,
+    filter .6s ease;
+}
+
+.letra-suave.visible{
+  opacity:1;
+  filter:blur(0);
+}
+
+
 /* PALPITAR */
 .palpitar{
   animation:palpitar 4.5s ease-in-out infinite;
@@ -387,6 +402,55 @@ button.hide{ opacity:0; pointer-events:none; }
   button{
     box-shadow:0 10px 24px rgba(255,120,160,.55);
   }
+  /* FECHA DORADA RESPIRANDO */
+.fecha-dorada{
+  font-family:'Times New Roman', serif;
+  color:#ffd88a;
+  font-size:1.45em;
+  opacity:0;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+
+  text-shadow:
+    0 0 8px rgba(255,220,150,.5),
+    0 0 18px rgba(255,200,120,.7),
+    0 0 30px rgba(255,170,80,.9);
+
+  filter:blur(6px);
+  transition:
+    opacity 2.2s ease,
+    filter 2.6s ease;
+}
+
+/* RESPIRACIÓN */
+.fecha-dorada.respirar{
+  animation:respirarFecha 5.5s ease-in-out infinite;
+}
+
+@keyframes respirarFecha{
+  0%,100%{
+    opacity:.75;
+    transform:scale(1);
+    text-shadow:
+      0 0 8px rgba(255,220,150,.4),
+      0 0 18px rgba(255,200,120,.6),
+      0 0 30px rgba(255,170,80,.8);
+  }
+  50%{
+    opacity:1;
+    transform:scale(1.06);
+    text-shadow:
+      0 0 12px rgba(255,230,170,.7),
+      0 0 26px rgba(255,210,140,.9),
+      0 0 42px rgba(255,180,90,1);
+  }
+}
+
+/* INFINITO */
+.fecha-dorada .infinito{
+  font-size:1.15em;
+}
 }
 
 </style>
@@ -580,25 +644,43 @@ function musicaSuave(){
 
 /* ---------- TEXTO LUMINOSO ---------- */
 function escribirFrase(){
-  nombreLuz.textContent="";
-  nombreLuz.style.opacity=1;
-  nombreLuz.style.fontSize="1.2em";
+  nombreLuz.textContent = "";
+  nombreLuz.style.opacity = 1;
+  nombreLuz.style.fontSize = "1.2em";
   nombreLuz.classList.remove("palpitar");
 
-  let k=0;
-  const escribir=setInterval(()=>{
-    if(k<frase.length){
-      nombreLuz.textContent+=frase.charAt(k++);
-    }else{
+  let k = 0;
+
+  // ESCRIBIR "TE AMO LAURA GUZMAN"
+  const escribir = setInterval(() => {
+    if (k < frase.length) {
+      nombreLuz.textContent += frase.charAt(k++);
+    } else {
       clearInterval(escribir);
-      setTimeout(()=>{
-        nombreLuz.innerHTML=`${fecha}<span class="infinito">∞</span>`;
-        nombreLuz.style.fontSize="1.5em";
-        nombreLuz.classList.add("palpitar");
-      },1600);
+
+      // ⏳ DURACIÓN EN PANTALLA (7 segundos)
+      setTimeout(() => {
+
+        // DESVANECER TEXTO
+        nombreLuz.style.transition = "opacity 2.5s ease";
+        nombreLuz.style.opacity = 0;
+
+        // ESPERAR A QUE TERMINE DE DESVANECER
+        setTimeout(() => {
+
+          // MOSTRAR FECHA PERMANENTE
+          nombreLuz.innerHTML = `${fecha}<span class="infinito">∞</span>`;
+          nombreLuz.style.fontSize = "1.5em";
+          nombreLuz.style.opacity = 1;
+          nombreLuz.classList.add("palpitar");
+
+        }, 2600); // tiempo del fade out
+
+      }, 7000); // 7 segundos
     }
-  },220);
+  }, 220); // velocidad de escritura
 }
+
 
 /* ---------- ABRIR PRIMERA ---------- */
 function abrir(){
