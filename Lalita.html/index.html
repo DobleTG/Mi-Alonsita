@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Mi Alonsita ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
@@ -281,6 +281,114 @@ button.hide{ opacity:0; pointer-events:none; }
   0%,100%{ opacity:.7; transform:scale(1); }
   50%{ opacity:1; transform:scale(1.15); }
 }
+/* ===============================
+   AJUSTES ESPECÍFICOS MÓVIL
+   iPhone + Android
+   =============================== */
+
+/* Base móvil (todos) */
+@media (max-width: 480px){
+
+  body{
+    padding:12px;
+    align-items:flex-start;
+  }
+
+  .wrap{
+    max-width:100%;
+    perspective:1200px;
+  }
+
+  .sobre{
+    aspect-ratio: 4 / 3;
+    border-radius:12px;
+  }
+
+  .carta,
+  .carta2{
+    padding:18px 16px;
+  }
+
+  h1{
+    font-size:1.35em;
+  }
+
+  p{
+    font-size:1em;
+    line-height:1.6;
+  }
+
+  button{
+    padding:14px 26px;
+    font-size:0.95em;
+  }
+
+  #nombre-luz{
+    bottom:14px;
+    right:16px;
+    font-size:0.9em;
+  }
+
+  .video-fondo{
+    opacity:0.35;
+  }
+}
+
+/* ===============================
+   iPhone (Safari iOS)
+   =============================== */
+@supports (-webkit-touch-callout: none){
+
+  body{
+    font-family:-apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", sans-serif;
+  }
+
+  .wrap{
+    transform:scale(0.94);
+  }
+
+  .carta,
+  .carta2{
+    border-radius:14px;
+  }
+
+  h1{
+    letter-spacing:0.02em;
+  }
+
+  button{
+    border-radius:30px;
+  }
+
+  /* Evita saltos raros de viewport en iOS */
+  .video-fondo{
+    height:100vh;
+    width:100vw;
+  }
+}
+
+/* ===============================
+   Android (Chrome / WebView)
+   =============================== */
+@media (max-width: 480px) and (pointer: coarse){
+
+  body{
+    font-family: 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .wrap{
+    transform:scale(0.97);
+  }
+
+  p{
+    font-size:1.02em;
+  }
+
+  button{
+    box-shadow:0 10px 24px rgba(255,120,160,.55);
+  }
+}
+
 </style>
 </head>
 
