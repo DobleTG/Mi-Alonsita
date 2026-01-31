@@ -392,7 +392,9 @@ button.hide{ opacity:0; pointer-events:none; }
     .sobre{
     transform:scale(0.94);
   }
-
+    .centrador{
+    transform:translateY(-6vh);
+  }
 
 }
 
@@ -491,18 +493,33 @@ button.hide{ opacity:0; pointer-events:none; }
 .fecha-dorada .infinito{
   font-size:1.3em;
 }
+}
 
 @media (min-width:768px){
-  body{
-    align-items:center;
-  }
-
   .wrap{
     max-width:520px;
   }
 }
 
+.centrador{
+  position:fixed;
+  inset:0;                 /* 👈 MISMO MARCO QUE EL VIDEO */
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  pointer-events:none;
+  transform:translateY(-4vh);
 }
+
+.centrador .wrap{
+  pointer-events:auto;  /* botones siguen funcionando */
+}
+@media (max-width:480px){
+  .centrador{
+    transform:translateY(-6vh);
+  }
+}
+
 
 </style>
 </head>
@@ -513,7 +530,8 @@ button.hide{ opacity:0; pointer-events:none; }
 <video id="videoFondo" class="video-fondo" src="recuerdo2.mp4" autoplay loop muted playsinline></video>
 <div id="nombre-luz"></div>
 
-<div class="wrap">
+<div class="centrador">
+  <div class="wrap">
   <div class="sobre" id="sobre">
     <div class="tapa"></div>
 
