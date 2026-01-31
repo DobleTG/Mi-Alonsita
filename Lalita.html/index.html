@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1024, initial-scale=0.5, maximum-scale=1.0, user-scalable=yes">
+<meta name="viewport" content="width=1024, initial-scale=0.7, maximum-scale=1.0, user-scalable=yes">
 <title>Mi Alonsita ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
@@ -107,8 +107,8 @@ body.abierto .fondo{
 
 /* CONTENEDOR */
 .wrap{
-  width:100%;
-  max-width:520px;
+  width:110%;
+  max-width:700px;
   perspective:1600px;
   position:relative;
   z-index:5;
@@ -489,7 +489,7 @@ button.hide{ opacity:0; pointer-events:none; }
 
 /* INFINITO */
 .fecha-dorada .infinito{
-  font-size:1.15em;
+  font-size:1.3em;
 }
 }
 
@@ -783,7 +783,7 @@ function escribirFrase(){
 
           // MOSTRAR FECHA PERMANENTE
           nombreLuz.innerHTML = `${fecha}<span class="infinito">∞</span>`;
-          nombreLuz.style.fontSize = "3em";
+          nombreLuz.style.fontSize = "em";
           nombreLuz.style.opacity = 1;
           nombreLuz.classList.add("palpitar");
 
@@ -884,4 +884,3 @@ for(let i=0;i<16;i++){
 
 </body>
 </html>
-
