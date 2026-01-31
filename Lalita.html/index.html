@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1024, initial-scale=0.35, maximum-scale=1.0, user-scalable=yes">
+<meta name="viewport" content="width=1024, initial-scale=0.7, maximum-scale=1.0, user-scalable=yes">
 <title>Mi Alonsita ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
@@ -56,17 +56,13 @@ body.abierto .fondo{
 /* TEXTO LUMINOSO */
 #nombre-luz{
   position:absolute;
-
-  /* márgenes proporcionales al área visible */
   bottom:6%;
   right:6%;
-
-  /* límites para que nunca se salga */
   max-width:88%;
   text-align:right;
 
   font-family:'Great Vibes', 'Playfair Display', serif;
-  font-size:clamp(1.2em, 2.6vw, 2em);
+  font-size:clamp(1.6em, 4vw, 3em);
   letter-spacing:0.06em;
 
   color:#ffd88a;
@@ -74,11 +70,11 @@ body.abierto .fondo{
   pointer-events:none;
 
   text-shadow:
-    0 0 10px rgba(255,220,150,.6),
+    0 0 10px rgba(255,220150,.6),
     0 0 22px rgba(255,200,120,.9),
     0 0 38px rgba(255,170,80,1);
 
-  transition:opacity 2.5s ease, font-size 2.5s ease;
+  transition:opacity 2.5s ease;
   z-index:6;
 }
 
@@ -374,7 +370,7 @@ button.hide{ opacity:0; pointer-events:none; }
   bottom:8%;
   right:6%;
   max-width:90%;
-  font-size:1.15em;
+  font-size:1.3em;
   letter-spacing:0.05em;
   }
 
@@ -763,7 +759,7 @@ function fadeIn(audio, duration = 2500, maxVolume = 1, restart = true){
 function escribirFrase(){
   nombreLuz.textContent = "";
   nombreLuz.style.opacity = 1;
-  nombreLuz.style.fontSize = "1.2em";
+  nombreLuz.style.fontSize = "2em";
   nombreLuz.classList.remove("palpitar");
 
   let k = 0;
@@ -787,7 +783,7 @@ function escribirFrase(){
 
           // MOSTRAR FECHA PERMANENTE
           nombreLuz.innerHTML = `${fecha}<span class="infinito">∞</span>`;
-          nombreLuz.style.fontSize = "1.5em";
+          nombreLuz.style.fontSize = "3em";
           nombreLuz.style.opacity = 1;
           nombreLuz.classList.add("palpitar");
 
