@@ -55,15 +55,20 @@ body.abierto .fondo{
 
 /* TEXTO LUMINOSO */
 #nombre-luz{
-  position:fixed;
+  position:absolute;
 
-  /* anclaje real al borde visible */
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
-  right:  calc(env(safe-area-inset-right, 0px) + 14px);
+  /* márgenes proporcionales al área visible */
+  bottom:6%;
+  right:6%;
 
-  font: size 1.9em;
-  letter-spacing:0.06em;
+  /* límites para que nunca se salga */
+  max-width:88%;
+  text-align:right;
+
   font-family:'Great Vibes', 'Playfair Display', serif;
+  font-size:clamp(1.2em, 2.6vw, 2em);
+  letter-spacing:0.06em;
+
   color:#ffd88a;
   opacity:0;
   pointer-events:none;
@@ -74,8 +79,10 @@ body.abierto .fondo{
     0 0 38px rgba(255,170,80,1);
 
   transition:opacity 2.5s ease, font-size 2.5s ease;
-  z-index:999;
+  z-index:6;
 }
+
+
 
 
 .letra-suave{
@@ -364,10 +371,16 @@ button.hide{ opacity:0; pointer-events:none; }
   }
 
   #nombre-luz{
-    bottom:14px;
-    right:16px;
-    font-size:1.15em;
-    letter-spacing:0.05em;
+  bottom:8%;
+  right:6%;
+  max-width:90%;
+  font-size:1.15em;
+  letter-spacing:0.05em;
+  }
+
+
+  body{
+  position:relative;
   }
 
   .video-fondo{
