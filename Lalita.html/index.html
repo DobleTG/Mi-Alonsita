@@ -526,7 +526,7 @@ Mi Lalita... ❤️`;
 
 const texto2=`Nos conocimos jugando,
 sin imaginar que ese era el
-comienzo de nuestra historia.
+comienzo de nuestra.
 
 Entre partidas y risas
 encontré a mi calma,
@@ -616,14 +616,14 @@ function fadeOut(audio,callback){
   let v=audio.volume;
   const bajar=setInterval(()=>{
     if(v>0){
-      v-=0.02;
+      v-=0.05;
       audio.volume=Math.max(v,0);
     }else{
       clearInterval(bajar);
       audio.pause();
       if(callback) callback();
     }
-  },120);
+  },80);
 }
 
 function fadeIn(audio){
@@ -632,10 +632,10 @@ function fadeIn(audio){
   let v=0;
   const subir=setInterval(()=>{
     if(v<1){
-      v+=0.02;
+      v+=0.05;
       audio.volume=Math.min(v,1);
     }else clearInterval(subir);
-  },120);
+  },80);
 }
 
 function musicaSuave(){
@@ -707,6 +707,12 @@ function abrirSegunda(){
   segundaAbierta=true;
   btn2.classList.add("hide");
   btn3.style.display="block";
+  // SONIDO PAPEL SEGUNDA CARTA
+setTimeout(()=>{
+  papel.currentTime = 0;
+  papel.play().catch(()=>{});
+}, 400);
+
 
   fadeOut(music,()=>{
     fadeIn(music2);
