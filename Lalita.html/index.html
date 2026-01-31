@@ -59,7 +59,7 @@ body.abierto .fondo{
   bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
   right:  calc(env(safe-area-inset-right, 0px) + 14px);
 
-  font-size:1.2em;
+  font-size:2em;
   font-family:'Times New Roman',serif;
   color:#ffd88a;
   opacity:0;
@@ -347,7 +347,7 @@ button.hide{ opacity:0; pointer-events:none; }
   #nombre-luz{
     bottom:14px;
     right:16px;
-    font-size:0.9em;
+    font-size:1.3em;
   }
 
   .video-fondo{
@@ -478,14 +478,14 @@ button.hide{ opacity:0; pointer-events:none; }
 
     <!-- CARTA 1 -->
     <div class="carta" id="carta1">
-      <h1>Mi Alonsita ❤️</h1>
+      <h1>Mi Querida Lala ❤️</h1>
       <p id="mensaje"></p>
       <p id="firma">Por siempre... tu alonsito</p>
     </div>
 
     <!-- CARTA 2 -->
     <div class="carta2" id="carta2">
-      <h1>Para ti, mi amor ❤️</h1>
+      <h1>🌷Para la mejor Psicologa🌷</h1>
       <p id="mensaje2"></p>
       <p id="firma2" style="margin-top:26px;font-style:italic;font-weight:bold; opacity:0; transform:translateY(10px); transition:opacity 1.6s ease, transform 1.6s ease;">
   Con todo mi corazón... tu alonsito
@@ -497,7 +497,7 @@ button.hide{ opacity:0; pointer-events:none; }
   <div class="luz"></div>
 
   <button id="btn" onclick="abrir()">Tócame para abrir 💌</button>
-  <button id="btn2" onclick="abrirSegunda()">Aún no se acaba 💖</button>
+  <button id="btn2" onclick="abrirSegunda()">Aún no se acaba... 💖</button>
   <button id="btn3" onclick="volverPrimera()">Volver</button>
 
   <audio id="music" src="musica.mp3"></audio>
@@ -522,12 +522,26 @@ Jamás olvidaré el dia en que te conocí,
 Me hiciste el hombre mas feliz 
 aunque no quería admitir que era así.
 Entraste en mi corazón y ocupaste un 
-lugar demasiado especial en el.
+lugar demasiado especial allí.
+
+Me has dado luz calida en mis dias 
+grises y oscuros, sé que me cuesta 
+abrirme y no suelo expresar mucho.
+Pero te aseguro que has sido siempre
+mi lugar seguro.
+
+Te mereces todo lo bonito de este
+mundo, solo quiero ver esa sonrisita
+que me llena de energía y de alegría,
+ojalá este pequeño detalle sea de tu
+gusto y que le de un poco de emoción
+a tu día.
 
 Espero que este sea un año mas que
 pase a tu lado, Que sea lleno de
 prosperidad, felicidad, exitos y 
-mucho amor. 
+mucho amor, Siempre siempre mis 
+mejores deseos para ti Alonsita. 
 
 Feliz cumpleaños,
 Mi Princesa... ❤️`;
@@ -643,34 +657,68 @@ function escribir2(){
 
 
 /* ---------- AUDIO ---------- */
-function fadeOut(audio,callback){
-  let v=audio.volume;
-  const bajar=setInterval(()=>{
-    if(v>0){
-      v-=0.05;
-      audio.volume=Math.max(v,0);
+function fadeOut(audio, duration = 2500, callback){
+  if(!audio) return;
+
+  clearInterval(audio._fadeInterval);
+
+  const stepTime = 50;
+  const steps = duration / stepTime;
+  const step = audio.volume / steps;
+
+  audio._fadeInterval = setInterval(() => {
+    if(audio.volume > step){
+      audio.volume -= step;
     }else{
-      clearInterval(bajar);
+      audio.volume = 0;
+      clearInterval(audio._fadeInterval);
       audio.pause();
       if(callback) callback();
     }
-  },80);
+  }, stepTime);
+}
+// Música 1 — ultra suave
+function fadeInMusica1(){
+  fadeIn(music, 6500, 0.65, false);
 }
 
-function fadeIn(audio){
-  audio.volume=0;
+function fadeOutMusica1(callback){
+  fadeOut(music, 3000, callback);
+}
+
+// Música 2 — normal
+function fadeInMusica2(){
+  fadeIn(music2, 2500, 1,true);
+}
+
+function fadeOutMusica2(callback){
+  fadeOut(music2, 2500, callback);
+}
+
+
+function fadeIn(audio, duration = 2500, maxVolume = 1, restart = true){
+  clearInterval(audio._fadeInterval);
+
+  audio.volume = 0;
+
+  if(restart){
+    audio.currentTime = 0; // SOLO cuando quieres reiniciar
+  }
+
   audio.play().catch(()=>{});
-  let v=0;
-  const subir=setInterval(()=>{
-    if(v<1){
-      v+=0.05;
-      audio.volume=Math.min(v,1);
-    }else clearInterval(subir);
-  },80);
-}
 
-function musicaSuave(){
-  fadeIn(music);
+  const stepTime = 50;
+  const steps = duration / stepTime;
+  const step = maxVolume / steps;
+
+  audio._fadeInterval = setInterval(() => {
+    if(audio.volume < maxVolume - step){
+      audio.volume += step;
+    }else{
+      audio.volume = maxVolume;
+      clearInterval(audio._fadeInterval);
+    }
+  }, stepTime);
 }
 
 /* ---------- TEXTO LUMINOSO ---------- */
@@ -722,7 +770,7 @@ function abrir(){
   sobre.classList.add("abierto");
   setTimeout(()=>papel.play().catch(()=>{}),500);
   setTimeout(escribir,1300);
-  setTimeout(musicaSuave,1600);
+  setTimeout(fadeInMusica1, 1600);
   setTimeout(escribirFrase,1800);
     // VIDEO EN LA PRIMERA CARTA
   fondo.style.opacity = 0;
@@ -744,9 +792,8 @@ setTimeout(()=>{
   papel.play().catch(()=>{});
 }, 400);
 
-
-  fadeOut(music,()=>{
-    fadeIn(music2);
+  fadeOutMusica1(()=>{
+  fadeInMusica2();
   });
 
     // IMAGEN EN LA SEGUNDA CARTA
@@ -772,8 +819,8 @@ function volverPrimera(){
   btn3.classList.add("hide");
   btn2.style.display="block";
 
-  fadeOut(music2,()=>{
-    fadeIn(music);
+  fadeOutMusica2(()=>{
+  fadeInMusica1();
   });
 
   videoFondo.classList.remove("video-activo");
