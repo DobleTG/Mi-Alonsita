@@ -108,7 +108,7 @@ body.abierto .fondo{
 /* CONTENEDOR */
 .wrap{
   width:100%;
-  max-width:420px;  
+  max-width:460px;  
   margin:0 auto;
   perspective:1400px;
   position:relative;
@@ -211,9 +211,9 @@ p{ margin:0; font-size:1.1em; color:#4a2b2b; line-height:1.75; white-space:pre-l
 .carta p,
 .carta2 p{
   font-family:'Dancing Script', 'Times New Roman', serif;
-  font-size:1.3em;
+  font-size:1.4em;
   line-height:1.6;
-  letter-spacing:0.025em;
+  letter-spacing:0.04em;
 
   /* efecto tinta real */
   text-shadow:
@@ -519,7 +519,26 @@ button.hide{ opacity:0; pointer-events:none; }
     transform:translateY(-6vh);
   }
 }
+/* ===============================
+   iOS moderno (iPhone 17 incluido)
+   =============================== */
+@supports (-webkit-touch-callout: none){
+  .centrador{
+    /* Safari iOS tiende a “bajar” el centro visual */
+    transform:translateY(-7vh);
+  }
+  @supports (-webkit-touch-callout: none){
+  .wrap{
+    max-width:480px;
+  }
 
+  .carta p,
+  .carta2 p{
+    font-size:1.4em;
+  }
+  }
+
+}
 
 </style>
 </head>
