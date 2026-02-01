@@ -351,10 +351,13 @@ button.hide{ opacity:0; pointer-events:none; }
   }
 
   .carta,
-  .carta2{
-    padding:18px 16px;
-    transform: translateY(80%);
-  }
+.carta2{
+  transform: translateY(0); /* desactiva el translateY que cortaba la carta */
+  bottom: -5%;              /* posición inicial para que quede oculta pero no se corte */
+  width: 94%;               /* opcional: un poco más ancha en móviles */
+  max-height: 85%;          /* opcional: no se pase del sobre */
+}
+
 
   h1{
     font-size:1.35em;
@@ -933,3 +936,4 @@ for(let i=0;i<16;i++){
 
 </body>
 </html>
+
