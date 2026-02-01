@@ -149,13 +149,24 @@ body.abierto .fondo{
 /* TAPA */
 .tapa{
   position:absolute;
-  top:0; left:0;
+  top:0;
+  left:0;
   width:100%;
   height:50%;
-  background:url('sobre.jpg') center top/cover no-repeat;
+  background:transparent;   /* 👈 CLAVE */
   transform-origin:top;
   transition:transform 1.8s cubic-bezier(.2,.8,.2,1);
   z-index:6;
+}
+.tapa::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:inherit;
+  background-image:inherit;
+  background-size:inherit;
+  background-position:inherit;
+  clip-path:inset(0 0 50% 0);
 }
 
 /* SELLO */
@@ -327,6 +338,7 @@ button.hide{ opacity:0; pointer-events:none; }
   0%,100%{ opacity:.7; transform:scale(1); }
   50%{ opacity:1; transform:scale(1.15); }
 }
+
 /* ===============================
    AJUSTES ESPECÍFICOS MÓVIL
    iPhone + Android
@@ -349,6 +361,11 @@ button.hide{ opacity:0; pointer-events:none; }
     aspect-ratio: 4 / 3;
     border-radius:12px;
   }
+  .sobre{
+  width:100%;
+  max-width:360px;
+  margin:0 auto;
+}
 
   .carta,
   .carta2{
@@ -393,11 +410,6 @@ button.hide{ opacity:0; pointer-events:none; }
   .centrador{
   transform:translateY(-6vh);
   }
-  .sobre{
-  width:100%;
-  max-width:360px;
-  margin:0 auto;
-}
 
 }
 
