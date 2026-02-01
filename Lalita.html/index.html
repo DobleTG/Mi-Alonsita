@@ -315,15 +315,24 @@ button.hide{ opacity:0; pointer-events:none; }
   bottom:-120px;
   width:90px;
   pointer-events:none;
-  animation:flotar linear infinite;
+
+  animation:flotar linear forwards;
   z-index:2;
   filter:drop-shadow(0 0 14px rgba(255,180,80,.8));
-}
-@keyframes flotar{
-  from{ transform:translateY(0) translateX(0); }
-  to{ transform:translateY(-120vh) translateX(var(--deriva)); }
+
+  will-change: transform, opacity;
 }
 
+@keyframes flotar{
+  from{
+    transform: translateY(0) translateX(0);
+    opacity: 1;
+  }
+  to{
+    transform: translateY(-85vh) translateX(var(--deriva)) scale(0.6);
+    opacity: 0;
+  }
+}
 /* INFINITO LUMINOSO */
 .infinito{
   margin-left:6px;
@@ -707,21 +716,21 @@ let i=0,j=0,iniciado=false,segundaAbierta=false;
 
 /* ---------- GLOBOS ---------- */
 function crearGlobo(){
-  const g=document.createElement("img");
-  g.src="globo.png";
-  g.className="globo";
-  g.style.left=Math.random()*100+"vw";
-  g.style.width=(60+Math.random()*50)+"px";
-  g.style.setProperty("--deriva",(Math.random()*80-40)+"px");
-  g.style.animationDuration=(14+Math.random()*10)+"s";
-  document.body.appendChild(g);
-  setTimeout(()=>{
-  g.style.transition = "opacity 1.8s ease, transform 1.8s ease";
-  g.style.opacity = "0";
-  g.style.transform += " scale(0.6)";
-}, 21500);
-setTimeout(()=>g.remove(),24000);
+  const g = document.createElement("img");
+  g.src = "globo.png";
+  g.className = "globo";
 
+  g.style.left = Math.random() * 100 + "vw";
+  g.style.width = (60 + Math.random() * 50) + "px";
+  g.style.setProperty("--deriva", (Math.random() * 80 - 40) + "px");
+  g.style.animationDuration = (14 + Math.random() * 10) + "s";
+
+  document.body.appendChild(g);
+
+  // eliminar cuando termine la animación
+  g.addEventListener("animationend", () => {
+    g.remove();
+  });
 }
 
 let globosInterval=null;
