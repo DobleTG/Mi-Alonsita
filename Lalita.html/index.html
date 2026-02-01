@@ -716,7 +716,13 @@ function crearGlobo(){
   g.style.setProperty("--deriva",(Math.random()*80-40)+"px");
   g.style.animationDuration=(14+Math.random()*10)+"s";
   document.body.appendChild(g);
-  setTimeout(()=>g.remove(),24000);
+  setTimeout(()=>{
+  g.style.transition = "opacity 1.8s ease, transform 1.8s ease";
+  g.style.opacity = "0";
+  g.style.transform += " scale(0.6)";
+}, 21500);
+setTimeout(()=>g.remove(),24000);
+
 }
 
 let globosInterval=null;
