@@ -808,7 +808,7 @@ function fadeIn(audio, duration = 2500, maxVolume = 1, restart = true){
 function escribirFrase(){
   nombreLuz.textContent = "";
   nombreLuz.style.opacity = 1;
-  nombreLuz.style.fontSize = "2em";
+  nombreLuz.style.fontSize = "1.5em";
   nombreLuz.classList.remove("palpitar");
 
   let k = 0;
@@ -832,7 +832,7 @@ function escribirFrase(){
 
           // MOSTRAR FECHA PERMANENTE
           nombreLuz.innerHTML = `${fecha}<span class="infinito">∞</span>`;
-          nombreLuz.style.fontSize = "em";
+          nombreLuz.style.fontSize = "2em";
           nombreLuz.style.opacity = 1;
           nombreLuz.classList.add("palpitar");
 
@@ -933,3 +933,4 @@ for(let i=0;i<16;i++){
 
 </body>
 </html>
+
