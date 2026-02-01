@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
 
 <style>
 body{
@@ -243,6 +244,17 @@ p{ margin:0; font-size:1.1em; color:#4a2b2b; line-height:1.75; white-space:pre-l
   transform:translateY(10px);
   transition:opacity 1.6s ease, transform 1.6s ease;
 }
+.firma{
+  font-family:'Parisienne', cursive;
+  font-size:1.4em;
+  opacity:0;
+  transition:opacity 2s ease;
+}
+
+.firma.visible{
+  opacity:1;
+}
+
 
 /* SEGUNDA CARTA */
 .carta2{
@@ -567,6 +579,24 @@ button.hide{ opacity:0; pointer-events:none; }
   }
 
 }
+.titulo-escribir{
+  display:inline-block;
+  overflow:hidden;
+  white-space:nowrap;
+  border-right:2px solid rgba(255,180,200,.6);
+
+  width:0;
+  opacity:1;
+
+  animation:
+    escribirTitulo 2.8s steps(30,end) forwards,
+    blinkCursor .7s step-end infinite;
+}
+
+@keyframes escribirTitulo{
+  from{ width:0; }
+  to{ width:100%; }
+}
 /* CONTENEDOR DE GLOBOS (FIX ZOOM BUG)*/
 #globos-container{
   position: fixed;
@@ -587,6 +617,15 @@ button.hide{ opacity:0; pointer-events:none; }
   pointer-events:none;
   z-index:1;
   isolation:isolate;
+}
+.carta h1,
+.carta2 h1 {
+  font-family: 'Parisienne', cursive;
+  font-size: 2em;
+  color: #5a2a3c;
+  white-space: nowrap;
+  border-right: 2px solid #5a2a3c; /* cursor máquina de escribir */
+  overflow: hidden;
 }
 
 </style>
@@ -915,7 +954,14 @@ function abrir(){
   document.body.classList.add("abierto");
   sobre.classList.add("abierto");
   setTimeout(()=>papel.play().catch(()=>{}),500);
-  setTimeout(escribir,1300);
+  // ESCRIBIR TITULO DE LA CARTA 1 CON EFECTO
+setTimeout(() => {
+  escribirTitulo(document.querySelector("#carta1 h1"), "Mi Querida Lala ❤️", 120);
+}, 1300);
+
+// ESCRIBIR EL TEXTO DE LA CARTA 1
+setTimeout(escribir, 1800);
+
   setTimeout(fadeInMusica1, 1600);
   setTimeout(escribirFrase,1800);
     // VIDEO EN LA PRIMERA CARTA
@@ -943,16 +989,19 @@ function abrirSegunda(){
     papel.play().catch(()=>{});
   }, 400);
 
+  // AUDIO
   fadeOutMusica1(()=>{
     fadeInMusica2();
   });
 
-  // IMAGEN EN LA SEGUNDA CARTA
+  // IMAGEN / VIDEO EN LA SEGUNDA CARTA
   videoFondo.classList.remove("video-activo");
   fondo.style.opacity = 0.45;
 
+  // GLOBOS
   globosInterval = setInterval(crearGlobo,1400);
 
+  // TRANSICIÓN ENTRE CARTAS
   carta1.style.opacity = 0;
   carta1.style.transform = "translateY(-20px)";
   setTimeout(()=>{
@@ -960,9 +1009,29 @@ function abrirSegunda(){
     carta2.style.pointerEvents = "auto";
     carta2.style.opacity = 1;
     carta2.style.transform = "translateY(0)";
+
+    // --- EFECTO MÁQUINA DE ESCRIBIR TÍTULO ---
+    const tituloCarta2 = document.querySelector("#carta2 h1");
+    const textoTitulo = "🌷Para la mejor Psicologa🌷";
+    tituloCarta2.textContent = "";
+    tituloCarta2.style.borderRight = "2px solid #5a2a3c"; // cursor
+
+    let k = 0;
+    const escribirTituloInterval = setInterval(() => {
+      if (k < textoTitulo.length) {
+        tituloCarta2.textContent += textoTitulo.charAt(k++);
+      } else {
+        clearInterval(escribirTituloInterval);
+        tituloCarta2.style.borderRight = "none"; // quitar cursor
+      }
+    }, 120); // velocidad de escritura
+
+    // TEXTO DE LA CARTA 2
     escribir2();
+
   },600);
 }
+
 
 
 /* ---------- VOLVER A PRIMERA ---------- */
@@ -1000,6 +1069,20 @@ for(let i=0;i<24;i++){
   e.style.animationDuration=(6+Math.random()*5)+"s";
   document.getElementById("fx-layer").appendChild(e);
 }
+function escribirTitulo(elemento, texto, velocidad = 120) {
+  elemento.textContent = ""; // limpiar texto previo
+  elemento.style.borderRight = "2px solid #5a2a3c"; // cursor visible
+  let k = 0;
+  const interval = setInterval(() => {
+    if (k < texto.length) {
+      elemento.textContent += texto.charAt(k++);
+    } else {
+      clearInterval(interval);
+      elemento.style.borderRight = "none"; // quitar cursor
+    }
+  }, velocidad);
+}
+
 </script>
 
 </body>
