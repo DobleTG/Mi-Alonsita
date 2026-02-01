@@ -137,6 +137,7 @@ body.abierto .fondo{
   position:relative;
   width:100%;
   aspect-ratio:16/10;
+  background:url('sobre.jpg') center/cover no-repeat;
   border-radius:14px;
   box-shadow:0 30px 65px rgba(0,0,0,.65);
   overflow:hidden;
@@ -144,15 +145,6 @@ body.abierto .fondo{
   transform:scale(1);
 
 }
-.sobre-img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:1;
-}
-
 
 /* TAPA */
 .tapa{
@@ -160,19 +152,11 @@ body.abierto .fondo{
   top:0; left:0;
   width:100%;
   height:50%;
-  overflow:hidden;
+  background:url('sobre.jpg') center top/cover no-repeat;
   transform-origin:top;
   transition:transform 1.8s cubic-bezier(.2,.8,.2,1);
   z-index:6;
 }
-
-.tapa::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:url('sobre.jpg') center/cover no-repeat;
-}
-
 
 /* SELLO */
 .sello{
@@ -406,12 +390,14 @@ button.hide{ opacity:0; pointer-events:none; }
   .carta2 p{
     font-size:1.1em;
   }
-    .sobre{
-    transform:scale(0.9);
+  .centrador{
+  transform:translateY(-6vh);
   }
-    .centrador{
-    transform:translateY(-6vh);
-  }
+  .sobre{
+  width:100%;
+  max-width:360px;
+  margin:0 auto;
+}
 
 }
 
@@ -554,12 +540,6 @@ button.hide{ opacity:0; pointer-events:none; }
     font-size:1.4em;
   }
   }
-  .sobre,
-.tapa{
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
-  transform:translateZ(0);
-}
 
 }
 
@@ -575,7 +555,6 @@ button.hide{ opacity:0; pointer-events:none; }
 <div class="centrador">
   <div class="wrap">
   <div class="sobre" id="sobre">
-  <img src="sobre.jpg" class="sobre-img" alt="">
     <div class="tapa"></div>
 
     <div class="sello">
@@ -656,7 +635,7 @@ const texto2=`¿Pensaste que solo iba a escribir eso?
 pues claramente no jeje
 
 Nos conocimos en una partida 
-cualquiera,sin imaginar que
+cualquiera, sin imaginar que
 serías la historia mas bonita 
 de amor nunca antes contada.
 
