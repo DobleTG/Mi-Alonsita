@@ -401,7 +401,7 @@ button.hide{ opacity:0; pointer-events:none; }
   }
 
   .video-fondo{
-    opacity:0.35;
+    opacity:0.6;
   }
   .carta p,
   .carta2 p{
@@ -421,8 +421,12 @@ button.hide{ opacity:0; pointer-events:none; }
   body{
     font-family:-apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", sans-serif;
   }
-
-
+  .video-fondo{
+    opacity:0.6;
+  }
+  .video-activo{
+    opacity:0.75;
+  }
   .carta,
   .carta2{
     border-radius:14px;
@@ -443,9 +447,7 @@ button.hide{ opacity:0; pointer-events:none; }
   }
 }
 
-/* ===============================
-   Android (Chrome / WebView)
-   =============================== */
+/* Android (Chrome / WebView)*/
 @media (max-width: 480px) and (pointer: coarse){
 
   body{
@@ -504,7 +506,7 @@ button.hide{ opacity:0; pointer-events:none; }
   }
 }
 
-/* INFINITO */
+/* infinito */
 .fecha-dorada .infinito{
   font-size:1.3em;
 }
@@ -535,12 +537,9 @@ button.hide{ opacity:0; pointer-events:none; }
     transform:translateY(-6vh);
   }
 }
-/* ===============================
-   iOS moderno (iPhone 17 incluido)
-   =============================== */
+/* iOS moderno (iPhone 17 incluido)*/
 @supports (-webkit-touch-callout: none){
   .centrador{
-    /* Safari iOS tiende a “bajar” el centro visual */
     transform:translateY(-6vh);
   }
   @supports (-webkit-touch-callout: none){
