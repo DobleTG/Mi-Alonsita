@@ -286,7 +286,7 @@ button{
 button.hide{ opacity:0; pointer-events:none; }
 
 /* BOTONES SECUNDARIOS */
-#btn2,#btn3{
+#btn2,#btn3,#btn4{
   display:none;
 }
 
@@ -414,7 +414,7 @@ button.hide{ opacity:0; pointer-events:none; }
   }
 
   .video-fondo{
-    opacity:0.6;
+    opacity:0.7;
   }
   .carta p,
   .carta2 p{
@@ -630,6 +630,9 @@ button.hide{ opacity:0; pointer-events:none; }
   <button id="btn" onclick="abrir()">Tócame para abrir 💌</button>
   <button id="btn2" onclick="abrirSegunda()">Aún no se acaba... 💖</button>
   <button id="btn3" onclick="volverPrimera()">Volver</button>
+  <button id="btn4" onclick="abrirSegunda()">Ir a la segunda carta 💌</button>
+
+
 
   <audio id="music" src="musica.mp3"></audio>
   <audio id="music2" src="musica2.mp3"></audio>
@@ -772,13 +775,14 @@ function escribir(){
     pluma.currentTime=0;
     pluma.play().catch(()=>{});
     setTimeout(escribir,45);
-  }else{
-    setTimeout(()=>{
-      firma.style.opacity=1;
-      firma.style.transform="translateY(0)";
-      btn2.style.display="block";
-    },600);
-  }
+  }else {
+  setTimeout(() => {
+    firma.style.opacity = 1;
+    firma.style.transform = "translateY(0)";
+    btn2.style.display = "block"; 
+  }, 600);
+}
+
 }
 
 /* ---------- TEXTO CARTA 2 ---------- */
@@ -925,45 +929,48 @@ function abrir(){
 /* ---------- ABRIR SEGUNDA ---------- */
 function abrirSegunda(){
   if(segundaAbierta) return;
-  segundaAbierta=true;
+  segundaAbierta = true;
+
+  // 🔹 Ocultar el botón "Ir a la segunda carta" al abrirla
+  btn4.style.display = "none";
+
   btn2.classList.add("hide");
-  btn3.style.display="block";
+  btn3.style.display = "block";
+
   // SONIDO PAPEL SEGUNDA CARTA
-setTimeout(()=>{
-  papel.currentTime = 0;
-  papel.play().catch(()=>{});
-}, 400);
+  setTimeout(()=>{
+    papel.currentTime = 0;
+    papel.play().catch(()=>{});
+  }, 400);
 
   fadeOutMusica1(()=>{
-  fadeInMusica2();
+    fadeInMusica2();
   });
 
-    // IMAGEN EN LA SEGUNDA CARTA
+  // IMAGEN EN LA SEGUNDA CARTA
   videoFondo.classList.remove("video-activo");
   fondo.style.opacity = 0.45;
 
+  globosInterval = setInterval(crearGlobo,1400);
 
-  globosInterval=setInterval(crearGlobo,1400);
-
-  carta1.style.opacity=0;
-  carta1.style.transform="translateY(-20px)";
+  carta1.style.opacity = 0;
+  carta1.style.transform = "translateY(-20px)";
   setTimeout(()=>{
-    carta1.style.pointerEvents="none";
-    carta2.style.pointerEvents="auto";
-    carta2.style.opacity=1;
-    carta2.style.transform="translateY(0)";
+    carta1.style.pointerEvents = "none";
+    carta2.style.pointerEvents = "auto";
+    carta2.style.opacity = 1;
+    carta2.style.transform = "translateY(0)";
     escribir2();
   },600);
 }
+
 
 /* ---------- VOLVER A PRIMERA ---------- */
 function volverPrimera(){
   btn3.classList.add("hide");
   btn2.style.display="block";
-
-  fadeOutMusica2(()=>{
-  fadeInMusica1();
-  });
+  
+  fadeOutMusica2(()=>{ fadeInMusica1(); });
 
   videoFondo.classList.remove("video-activo");
   fondo.style.opacity=0.45;
@@ -977,8 +984,13 @@ function volverPrimera(){
     carta1.style.pointerEvents="auto";
     carta1.style.opacity=1;
     carta1.style.transform="translateY(0)";
+
+    btn4.style.display="block"; 
+    segundaAbierta = false;
   },600);
 }
+
+
 
 /* ---------- ESTRELLAS ---------- */
 for(let i=0;i<24;i++){
