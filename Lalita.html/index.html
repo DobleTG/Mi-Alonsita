@@ -974,7 +974,7 @@ function abrir(){
   setTimeout(()=>papel.play().catch(()=>{}),500);
   // ESCRIBIR TITULO DE LA CARTA 1 CON EFECTO
 setTimeout(() => {
-  escribirTitulo(document.querySelector("#carta1 h1"), "Mi Querida Lala ❤️", 120);
+  escribirTitulo(document.querySelector("#carta1 h1"), "Mi Querida Lala", 120);
 }, 1300);
 
 // ESCRIBIR EL TEXTO DE LA CARTA 1
@@ -1030,7 +1030,7 @@ function abrirSegunda(){
 
     // --- EFECTO MÁQUINA DE ESCRIBIR TÍTULO ---
     const tituloCarta2 = document.querySelector("#carta2 h1");
-    const textoTitulo = "🌷Para la mejor Psicologa🌷";
+    const textoTitulo = "🌷La mejor Psicologa🌷";
     tituloCarta2.textContent = "";
     tituloCarta2.style.borderRight = "2px solid #5a2a3c"; // cursor
 
@@ -1105,5 +1105,6 @@ function escribirTitulo(elemento, texto, velocidad = 120) {
 
 </body>
 </html>
+
 
 
