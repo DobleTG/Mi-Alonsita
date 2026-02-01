@@ -312,27 +312,31 @@ button.hide{ opacity:0; pointer-events:none; }
 /* GLOBOS DE CANTOYA */
 .globo{
   position:absolute;
-  bottom:-120px;
+  bottom:-160px;
   width:90px;
   pointer-events:none;
-
   animation:flotar linear forwards;
   z-index:2;
   filter:drop-shadow(0 0 14px rgba(255,180,80,.8));
-
-  will-change: transform, opacity;
 }
-
 @keyframes flotar{
-  from{
-    transform: translateY(0) translateX(0);
+  0%{
+    transform: translate3d(0, 0, 0);
     opacity: 1;
   }
-  to{
-    transform: translateY(-85vh) translateX(var(--deriva)) scale(0.6);
+
+  60%{
+    opacity: 1;
+  }
+
+  100%{
+    transform: translate3d(var(--deriva), -150vh, 0) scale(0.6);
     opacity: 0;
   }
 }
+
+
+
 /* INFINITO LUMINOSO */
 .infinito{
   margin-left:6px;
@@ -563,12 +567,33 @@ button.hide{ opacity:0; pointer-events:none; }
   }
 
 }
+/* CONTENEDOR DE GLOBOS (FIX ZOOM BUG)*/
+#globos-container{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+
+  overflow: visible;
+  pointer-events: none;
+  z-index: 2;
+}
+
+#fx-layer{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:1;
+  isolation:isolate;
+}
 
 </style>
 </head>
 
 <body>
-
+<div id="fx-layer"></div>
 <div class="fondo" id="fondo"></div>
 <video id="videoFondo" class="video-fondo" src="recuerdo2.mp4" autoplay loop muted playsinline></video>
 <div id="nombre-luz"></div>
@@ -611,6 +636,9 @@ button.hide{ opacity:0; pointer-events:none; }
   <audio id="papel" src="papel.mp3"></audio>
   <audio id="pluma" src="pluma.mp3"></audio>
 </div>
+
+<div id="globos-container"></div>
+
 
 <script>
 const texto=`Sé que es un "regalo" un poco extraño
@@ -716,18 +744,20 @@ let i=0,j=0,iniciado=false,segundaAbierta=false;
 
 /* ---------- GLOBOS ---------- */
 function crearGlobo(){
+  const cont = document.getElementById("globos-container");
+  if (!cont || cont.children.length > 8) return;
+
   const g = document.createElement("img");
   g.src = "globo.png";
   g.className = "globo";
 
-  g.style.left = Math.random() * 100 + "vw";
-  g.style.width = (60 + Math.random() * 50) + "px";
+  g.style.left = Math.random() * 100 + "%";
+  g.style.width = (60 + Math.random() * 40) + "px";
   g.style.setProperty("--deriva", (Math.random() * 80 - 40) + "px");
-  g.style.animationDuration = (14 + Math.random() * 10) + "s";
+  g.style.animationDuration = (22 + Math.random() * 10) + "s";
 
-  document.body.appendChild(g);
+  cont.appendChild(g);
 
-  // eliminar cuando termine la animación
   g.addEventListener("animationend", () => {
     g.remove();
   });
@@ -951,12 +981,12 @@ function volverPrimera(){
 }
 
 /* ---------- ESTRELLAS ---------- */
-for(let i=0;i<16;i++){
+for(let i=0;i<24;i++){
   const e=document.createElement("div");
   e.className="estrella";
   e.style.left=Math.random()*100+"vw";
   e.style.animationDuration=(6+Math.random()*5)+"s";
-  document.documentElement.appendChild(e);
+  document.getElementById("fx-layer").appendChild(e);
 }
 </script>
 
